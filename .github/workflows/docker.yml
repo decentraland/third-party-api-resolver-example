@@ -39,21 +39,3 @@ jobs:
           serviceName: third-party-api-resolver-server
           env: dev
           token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Trigger deployment - stg
-        id: deploy1
-        uses: decentraland/dcl-deploy-action@main
-        with:
-          dockerImage: '${{ steps.push-to-quay.outputs.registry-path }}'
-          serviceName: third-party-api-resolver-server
-          env: stg
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Trigger deployment - prd
-        id: deploy2
-        uses: decentraland/dcl-deploy-action@main
-        with:
-          dockerImage: '${{ steps.push-to-quay.outputs.registry-path }}'
-          serviceName: third-party-api-resolver-server
-          env: prd
-          token: ${{ secrets.GITHUB_TOKEN }}
