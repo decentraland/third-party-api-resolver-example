@@ -7,7 +7,7 @@ import { useItemRouter } from './Items'
 const app = express()
 const router = express.Router()
 
-const SERVER_PORT = process.env.SERVER_PORT || '5001'
+const SERVER_PORT = process.env.SERVER_PORT || '5000'
 const API_VERSION = process.env.API_VERSION || 'v1'
 const CORS_ORIGIN = process.env.CORS_ORIGIN || '*'
 const CORS_METHOD = process.env.CORS_METHOD || '*'
