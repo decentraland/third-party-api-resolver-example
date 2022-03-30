@@ -44,7 +44,7 @@ export const useItemRouter = (router: Router) => {
       id: req.params.id,
       amount: item ? 1 : 0,
       urn: item ? {
-        decentraland: item.urn
+        decentraland: item.pointer
       } : null
     })
   })
