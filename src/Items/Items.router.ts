@@ -38,7 +38,8 @@ export const useItemRouter = (router: Router) => {
       return res.status(404).json({ error: 'address is missing' })
     }
 
-    const item = await CatalystAPI.get(req.params.registryId, req.params.id)
+    const items = await CatalystAPI.get(req.params.registryId, req.params.id)
+    const item = items[0]
 
     return res.json({
       id: req.params.id,
