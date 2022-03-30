@@ -1,7 +1,7 @@
 import { Router } from 'express'
 
 import { Response } from './types'
-import { subgraphApi } from '../subgraphs/tpSubgraph'
+import { CatalystAPI } from '../catalyst/CatalystAPI'
 
 export const useItemRouter = (router: Router) => {
   router.get('/registry/:registryId/address/:address/assets', async function (req, res) {
@@ -9,7 +9,7 @@ export const useItemRouter = (router: Router) => {
       return res.status(404).json({ error: 'address is missing' })
     }
 
-    const items = await subgraphApi.fetchTPItems()
+    const items = await CatalystAPI.get(req.params.registryId)
 
     const response: Response = {
       address: req.params.address.toString(),
@@ -24,7 +24,7 @@ export const useItemRouter = (router: Router) => {
           id: item.blockchainItemId,
           amount: 1,
           urn: {
-            decentraland: item.urn
+            decentraland: item.pointer
           }
         })
       }
@@ -38,7 +38,7 @@ export const useItemRouter = (router: Router) => {
       return res.status(404).json({ error: 'address is missing' })
     }
 
-    const item = await subgraphApi.fetchTPItemByBlockchainId(req.params.id)
+    const item = await CatalystAPI.get(req.params.registryId, req.params.id)
 
     return res.json({
       id: req.params.id,
