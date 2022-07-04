@@ -119,7 +119,7 @@ This endpoint is responsible of returning a single asset via it's id. It must be
 
 This endpoint is responsible for returning a [bloom filter](https://en.wikipedia.org/wiki/Bloom_filter) comprising all the owners a registry has. For more information on why this endpoint is required you can check [this diagrams document](https://diagrams.menduz.com/#/notebook/2l3t8FEx6Yc4GyDvkdDe4EQKf2L2/-N360UU67zRNMytneR0E)
 
-This example uses the [BloomFilter](https://www.npmjs.com/package/bloom-filters#export-and-import) implementation of [@ethereumjs/vm] library to get all the available owners and return a JSON response that can later be used like this:
+This example uses the [BloomFilter](https://github.com/ethereumjs/ethereumjs-monorepo/blob/v4.1.3/packages/vm/src/bloom/index.ts) implementation of [@ethereumjs/vm] library to get all the available owners and return a JSON response that can later be used like this:
 
 ```ts
 import Bloom from '@ethereumjs/vm/dist/bloom'
