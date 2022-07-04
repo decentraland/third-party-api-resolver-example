@@ -21,13 +21,6 @@ export type ListResponse = BaseListResponse & {
 
 export type SingleResponse = Asset
 
-export type BloomFilterResponse = Partial<{
-  type: 'BloomFilter'
-  _size: number
-  _nbHashes: number
-  _filter: {
-    size: number
-    content: string
-  }
-  _seed: number
-}>
+export type BloomFilterResponse = {
+  data: string
+}

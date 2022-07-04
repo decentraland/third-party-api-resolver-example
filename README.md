@@ -119,13 +119,15 @@ This endpoint is responsible of returning a single asset via it's id. It must be
 
 This endpoint is responsible for returning a [bloom filter](https://en.wikipedia.org/wiki/Bloom_filter) comprising all the owners a registry has. For more information on why this endpoint is required you can check [this diagrams document](https://diagrams.menduz.com/#/notebook/2l3t8FEx6Yc4GyDvkdDe4EQKf2L2/-N360UU67zRNMytneR0E)
 
-This example uses the [BloomFilter](https://www.npmjs.com/package/bloom-filters#export-and-import) library to get all the available owners and return a JSON response that can later be used like this:
+This example uses the [BloomFilter](https://www.npmjs.com/package/bloom-filters#export-and-import) implementation of [@ethereumjs/vm] library to get all the available owners and return a JSON response that can later be used like this:
 
 ```ts
+import Bloom from '@ethereumjs/vm/dist/bloom'
+
 const url = '/v1/registry/cryptoregistry/owners-bloom-filter'
 
 const response = await fetch(url).then((res) => res.json())
-const filter = BloomFilter.fromJSON(response)
+const filter = new Bloom(Buffer.from(response.data, 'hex'))
 
 filter.has('0xf8af76decf64f4164f0c8c9d38f3fb4781e61c0f') // true
 filter.has('0xd357f1ff39dd407b5F383806E025eFeF5ea00F9E') // false
@@ -141,13 +143,6 @@ filter.has('0xd357f1ff39dd407b5F383806E025eFeF5ea00F9E') // false
 # Try to get the bloom filter for a valid registry
 /v1/registry/cryptoregistry/owners-bloom-filter
 {
-  "type": "BloomFilter",
-  "_size": 15,
-  "_nbHashes": 3,
-  "_filter": {
-    "size": 16,
-    "content": "/x0="
-  },
-  "_seed": 78187493520
+  "data": "00100000000000000000000000000000080010000800000000000000000000000080000000000000000000000000000000000000000000000000000000000002000000000004000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000800000000040000000000000000000000000000020000000000000280000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000040040000000000000000000000000000000010000000000000000000000000000"
 }
 ```

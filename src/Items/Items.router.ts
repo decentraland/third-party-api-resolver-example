@@ -1,5 +1,5 @@
+import Bloom from '@ethereumjs/vm/dist/bloom'
 import { Router } from 'express'
-import { BloomFilter } from 'bloom-filters'
 
 import * as db from '../db'
 import {
@@ -101,20 +101,23 @@ export const useItemRouter = (router: Router) => {
 
       // First get all items for the supplied registry
       const items = await db.getItemsByRegistryId(registryId)
-      let response: BloomFilterResponse = {}
+      let response: BloomFilterResponse = { data: '' }
 
       if (items.length > 0) {
         // Create and fill up the bloom filter with all the owners
-        const filter = new BloomFilter(15, 3)
+        const filter = new Bloom()
 
         for (const item of items) {
+          const buffer = Buffer.from(item.owner)
+
           // Avoid adding a value twice
-          if (!filter.has(item.owner)) {
-            filter.add(item.owner)
+          if (!filter.check(buffer)) {
+            filter.add(buffer)
           }
         }
 
-        response = filter.saveAsJSON()
+        // Replace the empty data with the hex representation of the BloomFilter
+        response.data = filter.bitvector.toString('hex')
       }
 
       return res.json(response)
