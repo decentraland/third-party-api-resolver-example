@@ -26,7 +26,7 @@ This endpoint is responsible of returning all assets an address own, for a parti
 
 #### Example
 
-```bash
+```http
 # Try to find assets for an invalid registry
 /v1/registry/invalidregistry/address/0xc04528c14c8ffd84c7c1fb6719b4a89853035cdd/assets
 {
@@ -73,7 +73,7 @@ This endpoint is responsible of returning a single asset via it's id. It must be
 
 #### Example
 
-```bash
+```http
 # Try to find an asset for an invalid registry
 /v1/registry/invalidthings/address/0xc04528c14c8ffd84c7c1fb6719b4a89853035cdd/assets/0xb794f5ea0ba39494ce839613fffba74279579268:2
 {
@@ -135,7 +135,7 @@ filter.has('0xd357f1ff39dd407b5F383806E025eFeF5ea00F9E') // false
 
 #### Example
 
-```bash
+```http
 # Try to get the bloom filter for an invalid
 /v1/registry/invalidstuff/owners-bloom-filter
 {
