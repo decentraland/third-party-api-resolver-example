@@ -1,5 +1,5 @@
-export function getIdFromPointer(pointer: string) {
-  // getIdFromPointer('urn:decentraland:matic:collections-thirdparty:cryptohats:0xc04528c14c8ffd84c7c1fb6719b4a89853035cdd:0')
-  // -> 0xc04528c14c8ffd84c7c1fb6719b4a89853035cdd:0
-  return pointer.split(':').slice(-2).join(':')
+export function buildURN(registryId: string, itemId: string): string {
+  // The URN is built using the default prefix and using the registry and item id.
+  // More info in how to generate a valid URN here: https://github.com/decentraland/adr/blob/main/docs/ADR-42-third-party-assets-integration.md#third-party-item-urn
+  return `urn:decentraland:matic:collections-thirdparty:${registryId}:${itemId}`
 }

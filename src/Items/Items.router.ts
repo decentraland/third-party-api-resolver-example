@@ -1,49 +1,52 @@
 import { Router } from 'express'
 import { BloomFilter } from 'bloom-filters'
 
-import { Response } from './types'
-import { CatalystAPI } from '../catalyst/CatalystAPI'
-import { getIdFromPointer } from './utils'
+import * as db from '../db'
+import {
+  Asset,
+  BloomFilterResponse,
+  ListResponse,
+  SingleResponse,
+} from './types'
+import { buildURN } from './utils'
 
 export const useItemRouter = (router: Router) => {
   router.get(
-    '/registry/:registryId/owners-bloom-filter',
-    async function (_req, res) {
-      const filter = new BloomFilter(15, 3)
-
-      filter.add('0x0f5d2fb29fb7d3cfee444a200298f468908cc942')
-      filter.add('0xc04528c14c8ffd84c7c1fb6719b4a89853035cdd')
-      filter.add('0x1d9aa2025b67f0f21d1603ce521bda7869098f8a')
-      filter.add('0xc6d2000a7a1ddca92941f4e2b41360fe4ee2abd9')
-
-      return res.json(filter.saveAsJSON())
-    }
-  )
-
-  router.get(
     '/registry/:registryId/address/:address/assets',
     async function (req, res) {
-      if (!req.params.address) {
-        return res.status(404).json({ error: 'address is missing' })
+      const { registryId, address } = req.params
+      if (!registryId || !address) {
+        return res
+          .status(404)
+          .json({ error: 'You need to supply a valid address and registry id' })
       }
 
-      const items = await CatalystAPI.getRegistry(req.params.registryId)
+      // First fetch all stored items using the registry provided
+      const items = await db.getItemsByRegistryId(registryId)
+      // An asset will represent the format for the data the standard requires
+      const assets: Asset[] = []
 
-      const response: Response = {
-        address: req.params.address.toString(),
-        total: items.length,
+      for (const item of items) {
+        if (item.owner === address) {
+          // We create the asset only if the address owns it
+          const asset: Asset = {
+            id: item.id,
+            amount: 1, // The amount can change depending on your use case!
+            urn: { decentraland: buildURN(registryId, item.id) }, // Check buildURN for more info on how to build it
+          }
+
+          assets.push(asset)
+        }
+      }
+
+      // Once we have the assets, we'll create the response proper
+      // Again, we follow the required format. In this case we won't bother with pagination but you must take care of the page and next properties
+      const response: ListResponse = {
+        address: address.toString(),
+        total: assets.length,
         page: 1,
-        assets: [],
-      }
-
-      for (let item of items) {
-        response.assets.push({
-          id: getIdFromPointer(item.pointer),
-          amount: 1,
-          urn: {
-            decentraland: item.pointer,
-          },
-        })
+        next: '',
+        assets,
       }
 
       return res.json(response)
@@ -53,20 +56,62 @@ export const useItemRouter = (router: Router) => {
   router.get(
     '/registry/:registryId/address/:address/assets/:id',
     async function (req, res) {
-      if (!req.params.address) {
-        return res.status(404).json({ error: 'address is missing' })
+      const { registryId, address, id } = req.params
+
+      if (!registryId || !address) {
+        return res
+          .status(404)
+          .json({ error: 'You need to supply a valid address and registry id' })
       }
 
-      const [item] = await CatalystAPI.getAsset(
-        req.params.registryId,
-        req.params.id
-      )
+      // We fetch the item from the database first, using the registry and id provided
+      const item = await db.getItemById(registryId, id)
 
-      return res.json({
-        id: req.params.id,
-        amount: item ? 1 : 0,
-        urn: item ? { decentraland: item.pointer } : null,
-      })
+      let amount = 0
+      let urn = { decentraland: '' }
+
+      if (item && item.owner === address) {
+        // We fill the necessary values if the item was fetched correctly
+        // and if the address owns it
+        amount = 1
+        urn.decentraland = buildURN(registryId, item.id) // Check buildURN for more info on how to build it
+      }
+
+      // We build the response according to the required standard and return it
+      const response: SingleResponse = {
+        id,
+        amount,
+        urn,
+      }
+
+      return res.json(response)
+    }
+  )
+
+  router.get(
+    '/registry/:registryId/owners-bloom-filter',
+    async function (req, res) {
+      const { registryId } = req.params
+
+      // First get all items for the supplied registry
+      const items = await db.getItemsByRegistryId(registryId)
+      let response: BloomFilterResponse = {}
+
+      if (items.length > 0) {
+        // Create and fill up the bloom filter with all the owners
+        const filter = new BloomFilter(15, 3)
+
+        for (const item of items) {
+          // Avoid adding a value twice
+          if (!filter.has(item.owner)) {
+            filter.add(item.owner)
+          }
+        }
+
+        response = filter.saveAsJSON()
+      }
+
+      return res.json(response)
     }
   )
 }

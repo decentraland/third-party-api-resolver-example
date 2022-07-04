@@ -1,20 +1,33 @@
-export type BaseResponse = {
-  total?: number,
-  page?: number,
+export type Metaverse = {
+  [metaverse: string]: string
+}
+
+export type Asset = {
+  id: string
+  amount: number
+  urn: Metaverse
+}
+
+export type BaseListResponse = {
+  total?: number
+  page?: number
   next?: string
 }
 
-export type Response = BaseResponse & {
+export type ListResponse = BaseListResponse & {
   address: string
   assets: Asset[]
 }
 
-export type Asset = {
-  id: string,
-  amount: number,
-  urn: Metaverse
-}
+export type SingleResponse = Asset
 
-export type Metaverse = {
-  [metaverse: string]: string
-}
+export type BloomFilterResponse = Partial<{
+  type: 'BloomFilter'
+  _size: number
+  _nbHashes: number
+  _filter: {
+    size: number
+    content: string
+  }
+  _seed: number
+}>
