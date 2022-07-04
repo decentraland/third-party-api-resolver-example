@@ -93,6 +93,12 @@ export const useItemRouter = (router: Router) => {
     async function (req, res) {
       const { registryId } = req.params
 
+      if (!registryId) {
+        return res
+          .status(404)
+          .json({ error: 'You need to supply a valid registry id' })
+      }
+
       // First get all items for the supplied registry
       const items = await db.getItemsByRegistryId(registryId)
       let response: BloomFilterResponse = {}
