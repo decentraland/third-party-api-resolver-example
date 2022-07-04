@@ -127,8 +127,8 @@ const url = '/v1/registry/cryptoregistry/owners-bloom-filter'
 const response = await fetch(url).then((res) => res.json())
 const filter = BloomFilter.fromJSON(response)
 
-filter2.has('0xf8af76decf64f4164f0c8c9d38f3fb4781e61c0f') // true
-filter2.has('0xd357f1ff39dd407b5F383806E025eFeF5ea00F9E') // false
+filter.has('0xf8af76decf64f4164f0c8c9d38f3fb4781e61c0f') // true
+filter.has('0xd357f1ff39dd407b5F383806E025eFeF5ea00F9E') // false
 ```
 
 #### Example
