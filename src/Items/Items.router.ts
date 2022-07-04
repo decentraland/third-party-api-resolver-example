@@ -108,6 +108,11 @@ export const useItemRouter = (router: Router) => {
         const filter = new Bloom()
 
         for (const item of items) {
+          if (!item.owner) {
+            // Skip unowned items
+            continue
+          }
+
           const buffer = Buffer.from(item.owner)
 
           // Avoid adding a value twice
