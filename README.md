@@ -138,7 +138,9 @@ filter.has('0xd357f1ff39dd407b5F383806E025eFeF5ea00F9E') // false
 ```bash
 # Try to get the bloom filter for an invalid
 /v1/registry/invalidstuff/owners-bloom-filter
-{}
+{
+  data: ""
+}
 
 # Try to get the bloom filter for a valid registry
 /v1/registry/cryptoregistry/owners-bloom-filter
