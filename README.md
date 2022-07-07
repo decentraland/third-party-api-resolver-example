@@ -18,7 +18,7 @@ npm run start # it'll build the project first
 
 ## API
 
-Once again we follow the [docs](https://docs.decentraland.org/decentraland/linked-wearables/#building-the-api) here for each endpoint we expose. We'll explain each one briefly, check the docs for more info and [ADR](https://github.com/decentraland/adr/blob/main/docs/ADR-42-third-party-assets-integration.md#third-party-resolver) for more info
+Once again we follow the [docs](https://docs.decentraland.org/decentraland/linked-wearables/#building-the-api) here for each endpoint we expose. We'll explain each one briefly, check the docs and [ADR](https://github.com/decentraland/adr/blob/main/docs/ADR-42-third-party-assets-integration.md#third-party-resolver) for more info
 
 ### @GET /registry/:registry-id/address/:address/assets
 
@@ -69,7 +69,7 @@ This endpoint is responsible of returning all assets an address own, for a parti
 
 ### @GET /registry/:registry-id/address/:address/assets/:id
 
-This endpoint is responsible of returning a single asset via it's id. It must belong to the regsitry and address. It has a [response format](https://github.com/decentraland/adr/blob/main/docs/ADR-42-third-party-assets-integration.md#get-registryregistry-idaddressaddressassetsid) it has to follow.
+This endpoint is responsible of returning a single asset via it's id. It must belong to the regsitry and to the address. It has a [response format](https://github.com/decentraland/adr/blob/main/docs/ADR-42-third-party-assets-integration.md#get-registryregistry-idaddressaddressassetsid) it has to follow.
 
 #### Example
 
@@ -119,7 +119,7 @@ This endpoint is responsible of returning a single asset via it's id. It must be
 
 This endpoint is responsible for returning a [bloom filter](https://en.wikipedia.org/wiki/Bloom_filter) comprising all the owners a registry has. For more information on why this endpoint is required you can check [this diagrams document](https://diagrams.menduz.com/#/notebook/2l3t8FEx6Yc4GyDvkdDe4EQKf2L2/-N360UU67zRNMytneR0E)
 
-This example uses the [BloomFilter](https://github.com/ethereumjs/ethereumjs-monorepo/blob/v4.1.3/packages/vm/src/bloom/index.ts) implementation of [@ethereumjs/vm] library to get all the available owners and return a JSON response that can later be used like this:
+This example uses the [BloomFilter](https://github.com/ethereumjs/ethereumjs-monorepo/blob/v4.1.3/packages/vm/src/bloom/index.ts) implementation of [@ethereumjs/vm](https://github.com/ethereumjs/ethereumjs-monorepo/tree/master/packages/vm) library to get all the available owners and return a JSON response that can later be used like this:
 
 ```ts
 import Bloom from '@ethereumjs/vm/dist/bloom'
