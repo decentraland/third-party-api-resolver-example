@@ -20,7 +20,7 @@
     "printWidth": 80
   },
   "dependencies": {
-    "@ethereumjs/vm": "^5.9.3",
+    "@ethereumjs/vm": "^6.1.0",
     "@types/express": "^4.17.11",
     "cors": "^2.8.5",
     "express": "^4.16.4",
