@@ -1,0 +1,42 @@
+[
+  {
+    "id": "anewtest:aaaea2f5-4d89-4b05-b4ba-460a6218cafa",
+    "owner": "0x2a39d4f68133491f0442496f601cde2a945b6d31"
+  },
+  {
+    "id": "anewtest:b512b9fc-657f-49c8-87eb-7cb93696cb86",
+    "owner": "0x2a39d4f68133491f0442496f601cde2a945b6d31"
+  },
+  {
+    "id": "pepemon:707b085a-9993-429d-aad3-0c586b890c6a",
+    "owner": "0x2a39d4f68133491f0442496f601cde2a945b6d31"
+  },
+  {
+    "id": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d:fe5d9374-7fbc-48d8-a7fe-296d7cccd066",
+    "owner": "0x2a39d4f68133491f0442496f601cde2a945b6d31"
+  },
+  {
+    "id": "mi-vieja-luna-ya-no-es-lo-que-era:62a28ce3-2af0-4c8a-b528-237d32e9a3b7",
+    "owner": "0x2a39d4f68133491f0442496f601cde2a945b6d31"
+  },
+  {
+    "id": "peparda:99d9542d-fbb8-405f-ab6e-1258bd4a31dc",
+    "owner": "0x1b8ba74cc34c2927aac0a8af9c3b1ba2e61352f2"
+  },
+  {
+    "id": "test-linked-wearables-collection:044f675a-2f1c-44d5-a9a4-303c032baa4f",
+    "owner": "0x1b8ba74cc34c2927aac0a8af9c3b1ba2e61352f2"
+  },
+  {
+    "id": "pepemon:f2fcb433-3b2c-47db-b9b5-47c4424640f7",
+    "owner": "0x1b8ba74cc34c2927aac0a8af9c3b1ba2e61352f2"
+  },
+  {
+    "id": "mi-vieja-luna-ya-no-es-lo-que-era:f7c8a0b5-a0a2-4aee-aea7-554482ad4cf6",
+    "owner": "0x1b8ba74cc34c2927aac0a8af9c3b1ba2e61352f2"
+  },
+  {
+    "id": "unsynced-tp:fdbd653f-25c2-406c-b8d7-e88772434311",
+    "owner": "0x1b8ba74cc34c2927aac0a8af9c3b1ba2e61352f2"
+  }
+]
