@@ -1,6 +1,6 @@
 ARG RUN
 
-FROM node:lts as builderenv
+FROM node:18 as builderenv
 
 WORKDIR /app
 
