@@ -1,5 +1,5 @@
-import Bloom from '@ethereumjs/vm/dist/bloom'
-import { Router } from 'express'
+import { Bloom } from '@ethereumjs/vm'
+import { Router, Request, Response } from 'express'
 
 import * as db from '../db'
 import {
@@ -13,7 +13,10 @@ import { buildURN } from './utils'
 export const useItemRouter = (router: Router) => {
   router.get(
     '/registry/:registryId/address/:address/assets',
-    async function (req, res) {
+    async function (
+      req: Request<{ registryId: string; address: string }>,
+      res: Response<any>
+    ): Promise<any> {
       const { registryId, address } = req.params
       if (!registryId || !address) {
         return res
@@ -27,7 +30,7 @@ export const useItemRouter = (router: Router) => {
       const assets: Asset[] = []
 
       for (const item of items) {
-        if (item.owner === address) {
+        if (item.owner.toLowerCase() === address.toLowerCase()) {
           // We create the asset only if the address owns it
           const asset: Asset = {
             id: item.id,
@@ -55,7 +58,10 @@ export const useItemRouter = (router: Router) => {
 
   router.get(
     '/registry/:registryId/address/:address/assets/:id',
-    async function (req, res) {
+    async function (
+      req: Request<{ registryId: string; address: string; id: string }>,
+      res: Response<any>
+    ): Promise<any> {
       const { registryId, address, id } = req.params
 
       if (!registryId || !address) {
@@ -70,7 +76,7 @@ export const useItemRouter = (router: Router) => {
       let amount = 0
       let urn = { decentraland: '' }
 
-      if (item && item.owner === address) {
+      if (item && item.owner.toLowerCase() === address.toLowerCase()) {
         // We fill the necessary values if the item was fetched correctly
         // and if the address owns it
         amount = 1
@@ -90,7 +96,10 @@ export const useItemRouter = (router: Router) => {
 
   router.get(
     '/registry/:registryId/owners-bloom-filter',
-    async function (req, res) {
+    async function (
+      req: Request<{ registryId: string }>,
+      res: Response<any>
+    ): Promise<any> {
       const { registryId } = req.params
 
       if (!registryId) {
@@ -122,7 +131,7 @@ export const useItemRouter = (router: Router) => {
         }
 
         // Replace the empty data with the hex representation of the BloomFilter
-        response.data = filter.bitvector.toString('hex')
+        response.data = Buffer.from(filter.bitvector).toString('hex')
       }
 
       return res.json(response)

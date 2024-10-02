@@ -20,21 +20,21 @@
     "printWidth": 80
   },
   "dependencies": {
-    "@ethereumjs/vm": "^5.9.3",
-    "@types/express": "^4.17.11",
+    "@ethereumjs/vm": "^8.1.1",
     "cors": "^2.8.5",
-    "express": "^4.16.4",
+    "express": "^4.21.0",
     "express-basic-auth": "^1.2.0",
     "express-cache-controller": "^1.1.0",
-    "tslint": "^6.1.3",
-    "typescript": "^4.1.5"
+    "tslint": "^6.1.3"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
-    "@types/node": "^14.14.28",
+    "@types/express": "^5.0.0",
+    "@types/node": "^20.16.10",
     "dcl-tslint-config-standard": "^1.1.0",
     "prettier": "^2.8.4",
     "ts-node": "^10.2.1",
-    "tslint-plugin-prettier": "^2.0.1"
+    "tslint-plugin-prettier": "^2.0.1",
+    "typescript": "^5.6.2"
   }
 }

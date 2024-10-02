@@ -13,21 +13,26 @@ const CORS_ORIGIN = process.env.CORS_ORIGIN || '*'
 const CORS_METHOD = process.env.CORS_METHOD || '*'
 
 app
-  .use(cors({
-    origin: CORS_ORIGIN,
-    methods: CORS_METHOD,
-    allowedHeaders: '*',
-    exposedHeaders: [
-      'ETag',
-      'Cache-Control',
-      'Content-Language',
-      'Content-Type',
-      'Expires',
-      'Last-Modified',
-      'Pragma',
-    ],
-  }))
-  .use(express.urlencoded({ extended: false, limit: '2mb' }), express.json({ limit: '5mb' }))
+  .use(
+    cors({
+      origin: CORS_ORIGIN,
+      methods: CORS_METHOD,
+      allowedHeaders: '*',
+      exposedHeaders: [
+        'ETag',
+        'Cache-Control',
+        'Content-Language',
+        'Content-Type',
+        'Expires',
+        'Last-Modified',
+        'Pragma',
+      ],
+    })
+  )
+  .use(
+    express.urlencoded({ extended: false, limit: '2mb' }),
+    express.json({ limit: '5mb' })
+  )
   .use(`/${API_VERSION}`, router)
 
 useAppRouter(router)
