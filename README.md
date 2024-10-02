@@ -13,7 +13,7 @@ npm install
 Then you can do
 
 ```bash
-npm run start # it'll build the project first
+npm run start # It'll build the project first
 ```
 
 ## API
